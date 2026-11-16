@@ -16,7 +16,14 @@ namespace MohawkGame2D
         {
             Window.SetTitle("Contain the Orb");
             Window.SetSize(800, 600);
-            
+            Window.ClearBackground(Color.Black);
+
+            balls[0] = new Ball();
+            balls[0].Setup(60, 0);
+
+            balls[1] = new Ball();
+            balls[1].Setup(30, 1);
+
         }
 
         /// <summary>
@@ -24,6 +31,7 @@ namespace MohawkGame2D
         /// </summary>
         public void Update()
         {
+            Window.ClearBackground(Color.Black);
             int score = 0;
             Text.Color = Color.White;
             Text.Draw($"MOTES: {score}", 10, 10);
@@ -33,6 +41,7 @@ namespace MohawkGame2D
             {
              
                 balls[i].TryCollideWithOtherBalls(balls);  
+
             }
 
 

@@ -9,21 +9,28 @@ public class Ball
     Vector2 velocity;
     float Radius;
     float friction = 0.7f;
+    int ballInternalID;
 
-    public void Setup()
+    public void Setup(int ballsize, int ballclass)
     {
-        
+
         position = Random.Vector2(Window.Size);
 
-        Radius = Random.Integer(10, 30 + 1);
+        Radius = ballsize;
 
-        
+        ballInternalID = ballclass;
 
 
     }
 
     public void Update()
     {
+        if (ballInternalID == 1)
+        {
+            velocity = Input.GetMousePosition() - position;
+            Radius -= 3;
+            Radius += 3;
+        }
 
         Vector2 gravity = new Vector2(0, 10);
 
@@ -72,6 +79,10 @@ public class Ball
             velocity *= friction;
         }
 
+        Draw.LineSize = 1;
+        Draw.LineColor = Color.Black;
+        Draw.FillColor = Color.White;
+        Draw.Circle(position, Radius);
 
     }
 
