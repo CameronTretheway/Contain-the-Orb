@@ -10,11 +10,8 @@ namespace MohawkGame2D
     /// </summary>
     public class Game
     {   
-        int playerXPos = 0 + 800 / 2;
-        int playerYPos = 0 + 600 / 2;
-        /// <summary>
-        ///     Setup runs once before the game loop begins.
-        /// </summary>
+
+        Ball[] balls = new Ball[2];
         public void Setup()
         {
             Window.SetTitle("Contain the Orb");
@@ -29,7 +26,22 @@ namespace MohawkGame2D
         {
             int score = 0;
             Text.Color = Color.White;
-            Text.Draw($"MOTES: {score}", 10, 10); 
+            Text.Draw($"MOTES: {score}", 10, 10);
+
+            
+            for (int i = 0; i < balls.Length; i += 1)
+            {
+             
+                balls[i].TryCollideWithOtherBalls(balls); 
+            }
+
+
+            
+            for (int i = 0; i < balls.Length; i++)
+            {
+                
+                balls[i].Update();
+            }
         } 
     }
 }
