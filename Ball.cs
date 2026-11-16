@@ -25,6 +25,20 @@ public class Ball
 
     public void Update()
     {
+        if (ballInternalID == 0)
+        {
+            float betaBallJumpChance = Random.Float(0, 100);
+
+            if (betaBallJumpChance < 1)
+            {
+                velocity.X = Random.Integer(-10, 10);
+
+                velocity.Y = Random.Integer(-10, 0);
+            }
+
+
+        }
+
         if (ballInternalID == 1)
         {
             velocity = Input.GetMousePosition() - position;
@@ -79,10 +93,15 @@ public class Ball
             velocity *= friction;
         }
 
+        Draw.FillColor = Color.Red;
+        Text.Draw($"{ballInternalID}", position.X, position.Y);
+
         Draw.LineSize = 1;
         Draw.LineColor = Color.Black;
         Draw.FillColor = Color.White;
         Draw.Circle(position, Radius);
+
+ 
 
     }
 
