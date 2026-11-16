@@ -32,7 +32,7 @@ namespace MohawkGame2D
             for (int i = 0; i < balls.Length; i += 1)
             {
              
-                balls[i].TryCollideWithOtherBalls(balls); 
+                balls[i].TryCollideWithOtherBalls(balls);  
             }
 
 
