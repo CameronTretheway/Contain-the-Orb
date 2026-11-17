@@ -10,6 +10,7 @@ public class Ball
     float Radius;
     float friction = 0.7f;
     int ballInternalID;
+    bool internalLossDetector = false;
 
     public void Setup(int ballsize, int ballclass)
     {
@@ -38,8 +39,8 @@ public class Ball
 
             if (Input.IsMouseButtonPressed(MouseButton.Left))
             {
-                velocity.X = ((Input.GetMousePosition().X + (Window.Width * 0.5f) + (position.X + (Window.Width * 0.5f))) * 0.01f);
-                velocity.Y = ((Input.GetMousePosition().Y + (Window.Height * 0.5f) + (position.Y + (Window.Height * 0.5f))) * 0.01f);
+                
+                velocity.Y = -10;
             }
 
 
@@ -72,13 +73,16 @@ public class Ball
       
             position.Y = Window.Height - Radius;
    
-            velocity.Y = -velocity.Y;
+            velocity.Y = -velocity.Y;\
+
+            internalLossDetector = true;
         }
     
         if (isCollidingTop == true)
         {
             position.Y = 0 + Radius;
             velocity.Y = -velocity.Y;
+            internalLossDetector = true;
         }
 
    
@@ -86,12 +90,14 @@ public class Ball
         {
             position.X = 0 + Radius;
             velocity.X = -velocity.X;
+            internalLossDetector = true;
         }
        
         if (isCollidingRight == true)
         {
             position.X = Window.Width - Radius;
             velocity.X = -velocity.X;
+            internalLossDetector = true;
         }
 
      

@@ -12,6 +12,7 @@ namespace MohawkGame2D
     {
         float score = 0;
         Ball[] balls = new Ball[2];
+        bool externalLossDetector = false;
         public void Setup()
         {
             Window.SetTitle("Contain the Orb");
@@ -43,6 +44,8 @@ namespace MohawkGame2D
                 balls[i].TryCollideWithOtherBalls(balls);
 
                 score += Time.DeltaTime * 1;
+
+                
             }
 
             for (int i = 0; i < balls.Length; i++)
