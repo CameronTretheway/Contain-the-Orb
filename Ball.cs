@@ -36,6 +36,12 @@ public class Ball
                 velocity.Y = Random.Integer(-10, 0);
             }
 
+            if (Input.IsMouseButtonPressed(MouseButton.Left))
+            {
+                velocity.X = ((Input.GetMousePosition().X + (Window.Width * 0.5f) + (position.X + (Window.Width * 0.5f))) * 0.01f);
+                velocity.Y = ((Input.GetMousePosition().Y + (Window.Height * 0.5f) + (position.Y + (Window.Height * 0.5f))) * 0.01f);
+            }
+
 
         }
 
@@ -45,6 +51,8 @@ public class Ball
             Radius -= 3;
             Radius += 3;
         }
+
+
 
         Vector2 gravity = new Vector2(0, 10);
 
@@ -97,7 +105,7 @@ public class Ball
         Text.Draw($"{ballInternalID}", position.X, position.Y);
 
         Draw.LineSize = 1;
-        Draw.LineColor = Color.Black;
+        Draw.LineColor = Color.White;
         Draw.FillColor = Color.White;
         Draw.Circle(position, Radius);
 
