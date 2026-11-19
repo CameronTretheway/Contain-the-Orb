@@ -26,7 +26,7 @@ public class Ball
 
     public void Update()
     {
-        
+
 
         if (ballInternalID == 0)
         {
@@ -41,7 +41,7 @@ public class Ball
 
             if (Input.IsMouseButtonPressed(MouseButton.Left))
             {
-                
+
                 velocity.Y = -10;
             }
 
@@ -63,25 +63,25 @@ public class Ball
 
         position += velocity;
 
-    
+
         bool isCollidingTop = (position.Y - Radius) < 0;
         bool isCollidingBottom = (position.Y + Radius) > Window.Height;
         bool isCollidingLeft = (position.X - Radius) < 0;
         bool isCollidingRight = (position.X + Radius) > Window.Width;
 
-      
+
         if (isCollidingBottom == true)
         {
-      
+
             position.Y = Window.Height - Radius;
-   
+
             velocity.Y = -velocity.Y;
             if (ballInternalID == 0)
             {
                 internalLossDetector = true;
             }
         }
-    
+
         if (isCollidingTop == true)
         {
             position.Y = 0 + Radius;
@@ -92,7 +92,7 @@ public class Ball
             }
         }
 
-   
+
         if (isCollidingLeft == true)
         {
             position.X = 0 + Radius;
@@ -102,7 +102,7 @@ public class Ball
                 internalLossDetector = true;
             }
         }
-       
+
         if (isCollidingRight == true)
         {
             position.X = Window.Width - Radius;
@@ -113,29 +113,34 @@ public class Ball
             }
         }
 
-     
+
         if (isCollidingBottom || isCollidingLeft || isCollidingRight)
         {
-           
+
             velocity *= friction;
         }
 
-        
+
         Draw.LineSize = 1;
-        Draw.LineColor = Color.White;
-        Draw.FillColor = Color.White;
-        Draw.Circle(position, Radius);
-        Draw.FillColor = Color.Red;
         if (ballInternalID == 0)
         {
-
-
-
+            if (internalLossDetector == false)
+            {
+                Draw.LineColor = Color.White;
+                Draw.FillColor = Color.White;
+            }
+            else
+            {
+                Draw.LineColor = Color.Black;
+                Draw.FillColor = Color.Black;
+            }
         }
-        
-
-
-
+        if (ballInternalID == 1)
+        {
+            Draw.LineColor = Color.White;
+            Draw.FillColor = Color.White;
+        }
+        Draw.Circle(position, Radius);
     }
 
     public void TryCollideWithOtherBalls(Ball[] balls)
