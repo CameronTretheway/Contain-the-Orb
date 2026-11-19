@@ -11,8 +11,10 @@ namespace MohawkGame2D
     public class Game
     {
         float score = 0;
+
+        public int modifier = 0;
+
         Ball[] balls = new Ball[2];
-        bool externalLossDetector = false;
         public void Setup()
         {
             Window.SetTitle("Contain the Orb");
@@ -43,18 +45,24 @@ namespace MohawkGame2D
              
                 balls[i].TryCollideWithOtherBalls(balls);
 
-                score += Time.DeltaTime * 1;
+                CheckForLoss();
 
-                
             }
 
             for (int i = 0; i < balls.Length; i++)
             {
                 
-                balls[i].Update();
-
-                
+                balls[i].Update(); 
+     
             }
         } 
+
+        void CheckForLoss()
+        {
+            if (balls[0].internalLossDetector == false)
+            {
+                score += Time.DeltaTime * 1; 
+            }
+        }
     }
 }

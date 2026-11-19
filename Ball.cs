@@ -10,8 +10,8 @@ public class Ball
     float Radius;
     float friction = 0.7f;
     int ballInternalID;
-    bool internalLossDetector = false;
 
+    public bool internalLossDetector = false;
     public void Setup(int ballsize, int ballclass)
     {
 
@@ -21,11 +21,13 @@ public class Ball
 
         ballInternalID = ballclass;
 
-
+        Window.ClearBackground(Color.Black);
     }
 
     public void Update()
     {
+        
+
         if (ballInternalID == 0)
         {
             float betaBallJumpChance = Random.Float(0, 100);
@@ -73,16 +75,21 @@ public class Ball
       
             position.Y = Window.Height - Radius;
    
-            velocity.Y = -velocity.Y;\
-
-            internalLossDetector = true;
+            velocity.Y = -velocity.Y;
+            if (ballInternalID == 0)
+            {
+                internalLossDetector = true;
+            }
         }
     
         if (isCollidingTop == true)
         {
             position.Y = 0 + Radius;
             velocity.Y = -velocity.Y;
-            internalLossDetector = true;
+            if (ballInternalID == 0)
+            {
+                internalLossDetector = true;
+            }
         }
 
    
@@ -90,14 +97,20 @@ public class Ball
         {
             position.X = 0 + Radius;
             velocity.X = -velocity.X;
-            internalLossDetector = true;
+            if (ballInternalID == 0)
+            {
+                internalLossDetector = true;
+            }
         }
        
         if (isCollidingRight == true)
         {
             position.X = Window.Width - Radius;
             velocity.X = -velocity.X;
-            internalLossDetector = true;
+            if (ballInternalID == 0)
+            {
+                internalLossDetector = true;
+            }
         }
 
      
@@ -107,15 +120,21 @@ public class Ball
             velocity *= friction;
         }
 
-        Draw.FillColor = Color.Red;
-        Text.Draw($"{ballInternalID}", position.X, position.Y);
-
+        
         Draw.LineSize = 1;
         Draw.LineColor = Color.White;
         Draw.FillColor = Color.White;
         Draw.Circle(position, Radius);
+        Draw.FillColor = Color.Red;
+        if (ballInternalID == 0)
+        {
 
- 
+
+
+        }
+        
+
+
 
     }
 
