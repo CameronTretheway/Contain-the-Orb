@@ -10,6 +10,7 @@ public class Ball
     float Radius;
     float friction = 0.7f;
     int ballInternalID;
+    float initialRadius = 0;
 
     public bool internalLossDetector = false;
     public void Setup(int ballsize, int ballclass)
@@ -19,6 +20,8 @@ public class Ball
 
         Radius = ballsize;
 
+        initialRadius = ballsize;
+
         ballInternalID = ballclass;
 
         Window.ClearBackground(Color.Black);
@@ -26,7 +29,6 @@ public class Ball
 
     public void Update()
     {
-
 
         if (ballInternalID == 0)
         {
@@ -124,15 +126,25 @@ public class Ball
         Draw.LineSize = 1;
         if (ballInternalID == 0)
         {
-            if (internalLossDetector == false)
+            if (internalLossDetector == false) 
             {
                 Draw.LineColor = Color.White;
                 Draw.FillColor = Color.White;
+
+                Radius = initialRadius;
             }
-            else
+
+            if (internalLossDetector == true)
             {
                 Draw.LineColor = Color.Black;
                 Draw.FillColor = Color.Black;
+
+                Radius = 0;
+
+                velocity = new Vector2(0, 0);
+
+                position.X = Random.Integer(Window.Width);
+                position.Y = Random.Integer(Window.Height);
             }
         }
         if (ballInternalID == 1)
@@ -143,45 +155,58 @@ public class Ball
         Draw.Circle(position, Radius);
     }
 
+    /// <summary>
+    /// COLLISION STUFF. DO NOT TOUCH.
+    /// </summary>
     public void TryCollideWithOtherBalls(Ball[] balls)
     {
-       
+
 
         foreach (Ball other in balls)
         {
-            
+
             if (this == other)
                 continue;
-        
+
             float sumRadii = this.Radius + other.Radius;
-          
+
             Vector2 fromThisToOther = other.position - this.position;
             Vector2 direction = Vector2.Normalize(fromThisToOther);
             float distance = fromThisToOther.Length();
 
-         
+
             bool doOverlap = distance < sumRadii;
             if (doOverlap == true)
             {
-               
+
                 float halfDistance = (sumRadii - distance) / 2;
                 Vector2 displacement = direction * halfDistance;
-                
+
                 other.position += displacement;
-              
+
                 this.position -= displacement;
 
-               
+
                 float volumeThis = MathF.PI * this.Radius * this.Radius;
                 float volumeOther = MathF.PI * other.Radius * other.Radius;
                 float sumVolume = volumeThis + volumeOther;
                 float frictionThis = 1f - (volumeThis / sumVolume * (1 - friction));
                 float frictionOther = 1f - (volumeOther / sumVolume * (1 - friction));
 
-           
+
                 this.velocity = this.velocity.Length() * -direction * frictionThis;
                 other.velocity = other.velocity.Length() * +direction * frictionOther;
             }
+        }
+    }
+
+    public void Reset(bool confirm)
+    {
+        if (confirm == true)
+        {
+            internalLossDetector = false;
+
+            confirm = false;
         }
     }
 }

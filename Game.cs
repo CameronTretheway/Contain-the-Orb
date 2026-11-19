@@ -14,6 +14,8 @@ namespace MohawkGame2D
 
         public int modifier = 0;
 
+        float highScore = 0;
+
         Ball[] balls = new Ball[2];
         public void Setup()
         {
@@ -47,6 +49,8 @@ namespace MohawkGame2D
 
                 CheckForLoss();
 
+
+
             }
 
             for (int i = 0; i < balls.Length; i++)
@@ -55,6 +59,21 @@ namespace MohawkGame2D
                 balls[i].Update(); 
      
             }
+
+            if (score >= highScore)
+            {
+                highScore = score;
+            }
+
+            if (balls[0].internalLossDetector == true)
+            {
+                if (Input.IsMouseButtonDown(MouseButton.Left))
+                {
+                    score = 0;
+                    balls[0].Reset(true);
+                }
+            }
+
         } 
 
         void CheckForLoss()
@@ -62,6 +81,14 @@ namespace MohawkGame2D
             if (balls[0].internalLossDetector == false)
             {
                 score += Time.DeltaTime * 1; 
+            }
+            else
+            {
+                Text.Draw($"THE ORB ESCAPED. YOU LOSE.", 270, 500);
+
+                Text.Draw($"HIGHEST YIELD: {highScore}", 300, 600);
+
+                Text.Draw($"CLICK TO TRY AGAIN.", 330, 700);
             }
         }
     }
