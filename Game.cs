@@ -10,11 +10,19 @@ namespace MohawkGame2D
     /// </summary>
     public class Game
     {
-        float score = 0;
+        float score = 0; 
 
         public int modifier = 0;
 
         float highScore = 0;
+
+        public int modifierChance = 0;
+
+        public int modifierChooser = 1;
+
+        public float modifierDelay = 0;
+
+        public bool modifierAlarmBell = false;
 
         Ball[] balls = new Ball[2];
         public void Setup()
@@ -56,7 +64,7 @@ namespace MohawkGame2D
             for (int i = 0; i < balls.Length; i++)
             {
                 
-                balls[i].Update(); 
+                balls[i].Update(this); 
      
             }
 
@@ -72,6 +80,42 @@ namespace MohawkGame2D
                     score = 0;
                     balls[0].Reset(true);
                 }
+            }
+
+            modifierDelay += Time.DeltaTime;
+
+            if (modifierDelay >= 30)
+            {
+                modifierDelay = 0;
+
+                modifierAlarmBell = true;
+            }
+
+            balls[0].gravityMultitplyer = modifierChooser;
+            
+            if (modifierAlarmBell == true)
+            {
+                modifierAlarmBell = false;
+                modifierChooser = Random.Integer(-1, 2);
+            }
+
+            if (modifierChooser == 1)
+            {
+                ///LOOK APON MY STOCK OF [flubbs!!!] TO GIVE. AS YOU CAN SEE, IT IS EMPTY.
+            }
+            else if (modifierChooser == 2)
+            {
+                Text.Draw($"MODIFIER ACTIVE: HYPERGRAV", 10, 970);
+
+            }
+            else if (modifierChooser == 0)
+            {
+                Text.Draw($"MODIFIER ACTIVE: ZERO-G", 10, 970);
+            }
+            else if (modifierChooser == -1)
+            {
+                Text.Draw($"MODIFIER ACTIVE: ANTIGRAV", 10, 970);
+
             }
 
         } 
@@ -90,6 +134,9 @@ namespace MohawkGame2D
 
                 Text.Draw($"CLICK TO TRY AGAIN.", 330, 700);
             }
+
+           
+
         }
     }
 }

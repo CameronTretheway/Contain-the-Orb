@@ -11,6 +11,7 @@ public class Ball
     float friction = 0.7f;
     int ballInternalID;
     float initialRadius = 0;
+    public int gravityMultitplyer = 1;
 
     public bool internalLossDetector = false;
     public void Setup(int ballsize, int ballclass)
@@ -27,7 +28,7 @@ public class Ball
         Window.ClearBackground(Color.Black);
     }
 
-    public void Update()
+    public void Update(Game game)
     {
 
         if (ballInternalID == 0)
@@ -38,13 +39,13 @@ public class Ball
             {
                 velocity.X = Random.Integer(-10, 10);
 
-                velocity.Y = Random.Integer(-10, 0);
+                velocity.Y = Random.Integer(-10, 0) * gravityMultitplyer; 
             }
 
             if (Input.IsMouseButtonPressed(MouseButton.Left))
             {
 
-                velocity.Y = -10;
+                velocity.Y = (-10 * gravityMultitplyer);
             }
 
 
@@ -57,9 +58,8 @@ public class Ball
             Radius += 3;
         }
 
-
-
-        Vector2 gravity = new Vector2(0, 10);
+        
+            Vector2 gravity = new Vector2(0, 10 * gravityMultitplyer);
 
         velocity += gravity * Time.DeltaTime;
 
@@ -168,7 +168,7 @@ public class Ball
             if (this == other)
                 continue;
 
-            float sumRadii = this.Radius + other.Radius;
+            float sumRadii = this.Radius + other.Radius; 
 
             Vector2 fromThisToOther = other.position - this.position;
             Vector2 direction = Vector2.Normalize(fromThisToOther);
